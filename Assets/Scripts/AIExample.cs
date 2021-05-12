@@ -11,6 +11,8 @@ public class AIExample : MonoBehaviour
 
     public FirstPersonController fpsc;
     public WanderType wanderType = WanderType.Random;
+    public float wanderSpeed = 3f;
+    public float chaseSpeed = 7f;
     public float fov = 120f;
     public float viewDistance = 10f;
     public float wanderRadius = 7f;
@@ -21,12 +23,14 @@ public class AIExample : MonoBehaviour
     private NavMeshAgent agent;
     private Renderer renderer;
     private int waypointIndex = 0;
+    private Animator animator;
 
 
     public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         renderer = GetComponent<Renderer>();
+        animator = GetComponentInChildren<Animator>();
         wanderPoint = RandomWanderPoint();
     }
 
@@ -36,7 +40,10 @@ public class AIExample : MonoBehaviour
         {
             //chase player ( đuổi player )
             agent.SetDestination(fpsc.transform.position);
-            renderer.material.color = Color.red;
+            animator.SetBool("Aware", true);
+            agent.speed = chaseSpeed;
+
+            //renderer.material.color = Color.red;
         }
         else
         {
@@ -44,7 +51,10 @@ public class AIExample : MonoBehaviour
             SearchForPlayer();
             //đi lang thang
             Wander();
-            renderer.material.color = Color.blue;
+            animator.SetBool("Aware", false);
+            agent.speed = wanderSpeed;
+
+            //renderer.material.color = Color.blue;
         }
     }
 
@@ -79,7 +89,7 @@ public class AIExample : MonoBehaviour
     {
         if(wanderType == WanderType.Random) 
         { 
-            if (Vector3.Distance(transform.position, wanderPoint) < 1f)
+            if (Vector3.Distance(transform.position, wanderPoint) < 0.7f)
             {
                 wanderPoint = RandomWanderPoint();
             }
