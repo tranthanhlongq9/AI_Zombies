@@ -358,10 +358,11 @@ MonoBehaviour:
   fpsc: {fileID: 995867469}
   wanderType: 1
   wanderSpeed: 1.25
-  chaseSpeed: 7
+  chaseSpeed: 5
   fov: 120
   viewDistance: 20
   wanderRadius: 7
+  loseThreshold: 2
   waypoints:
   - {fileID: 1147254048}
   - {fileID: 630407438}
@@ -435,22 +436,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a758b0d314dcee1408a5b8704a6fc49b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.94502366
+      value: 0.9803401
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a758b0d314dcee1408a5b8704a6fc49b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a758b0d314dcee1408a5b8704a6fc49b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.32700217
+      value: 0.19731519
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a758b0d314dcee1408a5b8704a6fc49b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a758b0d314dcee1408a5b8704a6fc49b,
         type: 3}
@@ -460,7 +461,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a758b0d314dcee1408a5b8704a6fc49b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 38.174004
+      value: 22.76
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a758b0d314dcee1408a5b8704a6fc49b,
         type: 3}
@@ -477,6 +478,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 79c8ebc5a1f714345abf4b19674c0cb7, type: 2}
+    - target: {fileID: 8460042987342472986, guid: a758b0d314dcee1408a5b8704a6fc49b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a758b0d314dcee1408a5b8704a6fc49b, type: 3}
 --- !u!1 &630407437

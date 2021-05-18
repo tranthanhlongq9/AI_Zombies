@@ -16,14 +16,17 @@ public class AIExample : MonoBehaviour
     public float fov = 120f;
     public float viewDistance = 10f;
     public float wanderRadius = 7f;
+    public float loseThreshold = 10f; //Thời gian tính bằng giây cho đến khi chúng lạc mất người chơi sau đó chúng ngừng phát hiện.
     public Transform[] waypoints; //Mảng điểm tham chiếu chỉ được sử dụng khi lang thang điểm tham chiếu được chọn
 
     private bool isAware = false;
+    private bool isDetecting = false;
     private Vector3 wanderPoint;
     private NavMeshAgent agent;
     private Renderer renderer;
     private int waypointIndex = 0;
     private Animator animator;
+    private float loseTimer = 0;
 
 
     public void Start()
@@ -42,13 +45,21 @@ public class AIExample : MonoBehaviour
             agent.SetDestination(fpsc.transform.position);
             animator.SetBool("Aware", true);
             agent.speed = chaseSpeed;
+            if (!isDetecting)
+            {
+                loseTimer += Time.deltaTime;
+                if (loseTimer >= loseThreshold)
+                {
+                    isAware = false;
+                    loseTimer = 0;
+                }
+            }
 
             //renderer.material.color = Color.red;
         }
         else
         {
-            //tìm
-            SearchForPlayer();
+            
             //đi lang thang
             Wander();
             animator.SetBool("Aware", false);
@@ -56,6 +67,8 @@ public class AIExample : MonoBehaviour
 
             //renderer.material.color = Color.blue;
         }
+        //tìm
+        SearchForPlayer();
     }
 
     //Tìm player
@@ -71,17 +84,34 @@ public class AIExample : MonoBehaviour
                     //xử lý va chạm vs tag : "Player"
                     if (hit.transform.CompareTag("Player"))
                     {
-                        OnAware(); 
+                        OnAware();
+                    }
+                    else
+                    {
+                        isDetecting = false;
                     }
                 }
-                
+                else
+                {
+                    isDetecting = false;
+                }
             }
+            else
+            {
+                isDetecting = false;
+            }
+        }
+        else
+        {
+            isDetecting = false;
         }
     }
 
     public void OnAware()
     {
         isAware = true;
+        isDetecting = true;
+        loseTimer = 0;
     }
 
     //Xử lý đi lang thang cho zombies
